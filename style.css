@@ -54,3 +54,40 @@
      /* gives us a pointer hand to show that it's interactive */
      cursor: pointer;
  }
+
+ .videos,
+ .middle,
+ .grid {
+     display: grid;
+     place-items: center;
+ }
+
+ .video {
+     /* this tells each chil video to take up full width and height of our grid */
+     grid-area: 1/1;
+     max-width: 500px;
+     max-height: 500px;
+     display: block;
+ }
+
+ .search-input,
+ .videos,
+ .full-area {
+     grid-area: 1/1;
+ }
+
+ .search-hint,
+ .spinner {
+     opacity: 0;
+     transition: opacity 0.5s ease;
+ }
+
+ .show-hint .search-hint,
+ .loading .spinner,
+ .loading .search-hint {
+     opacity: 1;
+ }
+
+ .loading .search-hint {
+    opacity: 0;
+ }
