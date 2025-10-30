@@ -28,7 +28,6 @@ function createVideo(src) {
     video.loop = true
     // this is how we can set class names using JS (it will overwrite them through)
     video.className = 'video'
-    console.log(video)
 
 
     // when we use return we tell a fucntion to give us something back
@@ -40,14 +39,20 @@ function createVideo(src) {
 // 3. on fail, let the user know therer was an error
 
 const toggleLoading = state => {
-    console.log('we are loading', state)
+    // console.log('we are loading', state)
     // in here we toggle the page loading state between on and off loading and not loading
     // if our state is true, we add a loading class to our body 
     if (state) {
         document.body.classList.add('loading')
+        // here we disable the input so users can't interfere with it 
+        // whilst it's searching 
+        searchEl.disabled = true
     } else {
         // otherwise we remove a loading class
         document.body.classList.remove('loading')
+        // here we enable the input again 
+        searchEl.disabled = false
+        searchEl.focus()
     }
 }
 
@@ -57,7 +62,6 @@ const toggleLoading = state => {
 const searchGiphy = searchTerm => {
     // here we toggle our loading screen so the user knows something is happening
     toggleLoading(true)
-    console.log('search for', searchTerm)
     // here we use backticks for our string so that we can embed our API_KEY and searchTerm variables 
     // the searchTerm part will be different for every varying search we make 
     fetch
