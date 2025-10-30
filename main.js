@@ -1,5 +1,17 @@
 const API_KEY = 'BpeUeIW4aQgsJjBJKYzArvXhGAhE4rJ5'
 
+// here we grab our search input 
+const searchEl = document.querySelector('.search-input')
+
+// here we grab our search hint
+const hintEl = document.querySelector('.search-hint')
+
+// here we grab our videos elements and then append our newly createdvideo to it 
+const videosEL = document.querySelector('.videos')
+
+// this is for our clear search button
+const clearEl = document.querySelector('.search-clear')
+
 // from trusty
 const randomChoise = arr => {
     const randIndex = Math.floor(Math.random() * arr.length)
@@ -70,8 +82,6 @@ const searchGiphy = searchTerm => {
             // here we use our createVideo function which we give the src attribute to and it gives us back a video element 
             const video = createVideo(src)
 
-            // here we grab our videos elements and then append our newly createdvideo to it 
-            const videosEL = document.querySelector('.videos')
             videosEL.appendChild(video)
 
             // here we listen out for the video loaded event to fire 
@@ -92,19 +102,16 @@ const searchGiphy = searchTerm => {
 
 
         })
+
         .catch(error => {
             // lastly we can use. catch() to do something in case our fetch fails 
+            // here we  toggle the loading state so it's disabled
+            toggleLoading(false)
+            // here we tell the user nothing was found 
+            hintEl.innerHTML = `Nothing was found for ${searchTerm}, please try again`
         })
 
 }
-
-// here we grab our search input 
-const searchEl = document.querySelector('.search-input')
-
-// here we grab our search hint
-const hintEl = document.querySelector('.search-hint')
-
-
 
 // here we seperate out our keyup function and we can caal to it in various places in our code
 const doSearch = event => {
@@ -130,5 +137,27 @@ const doSearch = event => {
     }
 }
 
+const clearSearch = event => {
+    // this toggles our results state off again 
+    document.body.classList.remove('has-results')
+    // here we clear out all content on our video and hint elements
+    videosEL.innerHTML = ''
+    hintEl.innerHTML = ''
+    searchEl.value = ''
+    // here we focus the input cursor back into our input 
+    searchEl.focus() = ''
+}
+
+
+// here we listen out for keyup events globally across the whole page we use the document keyword and attach tha addEventListener to it 
+document.addEventListener('keyup', event => {
+    // if we press the scape key fire the clearSearch function
+    if (event.key == 'Escape') {
+        clearSearch()
+    }
+})
+
 // we liste out for the keyup event on our search input 
 searchEl.addEventListener('keyup', doSearch)
+clearEl.addEventListener('click', clearSearch)
+
